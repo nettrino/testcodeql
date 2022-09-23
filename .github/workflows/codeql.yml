@@ -84,13 +84,13 @@ jobs:
     - name: See what's there
       run: cp /home/runner/work/_temp/codeql_databases/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs
     
-    - name: Checkout previous commit
+    - name: Copy previous analysis
       run: git checkout HEAD~1
     
     - name: Perform CodeQL Analysis on previous state
       uses: github/codeql-action/analyze@v2
       with:
-        category: "/language:${{matrix.language}}"
+        category: "previous_commit"
 
     - name: See if there's a diff
       run: diff /home/runner/work/_temp/codeql_databases/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs
