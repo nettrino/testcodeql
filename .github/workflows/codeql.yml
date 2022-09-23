@@ -113,7 +113,9 @@ jobs:
 
 
     - name: See if there's a diff
-      run: codeql bqrs diff -- /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs
+      run: |
+        /opt/hostedtoolcache/CodeQL/0.0.0-20220825/x64/codeql bqrs decode /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs  > /tmp/old.csv 
+        /opt/hostedtoolcache/CodeQL/0.0.0-20220825/x64/codeql bqrs decode /tmp/transitive.bqrs > /tmp/new.csv
 
     - name: assign reviewer
       uses: LongOddCode/assign-reviewer@0.2.2
@@ -142,6 +144,6 @@ jobs:
         # Your business logic.
         # Required.
         run: |
-          if ! codeql bqrs diff -- /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs; then
+          if ! diff -q /tmp/old.csv /tmp/new.csv; then
             echo '::set-output name=TELEMETRY_RESULT::true'
           fi
