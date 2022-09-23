@@ -87,10 +87,16 @@ jobs:
     - name: Checkout previous commit
       run: git checkout HEAD~1
     
+    - name: Re-Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        packs: nettrino/nomod
+        db-location: /tmp/newdb_loc
+        languages: ${{ matrix.language }}
+    
     - name: Perform CodeQL Analysis on previous state
       uses: github/codeql-action/analyze@v2
       with:
-        db-location: /tmp/newdb_loc
         category: "previous_commit"
 
     - name: See if there's a diff
