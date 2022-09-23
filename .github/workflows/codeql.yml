@@ -84,3 +84,9 @@ jobs:
       with:
         name: graphql-latest
         path: /home/runner/work/testcodeql/results/python.sarif
+    
+    - run: ls -R /home/runner/.codeql/packages/nettrino
+    # - uses: actions/upload-artifact@v3
+    #   with:
+    #     name: transitive
+    #     path: /home/runner/.codeql/packages/nettrino/nomod/0.0.1/transitive.bqrs
