@@ -90,3 +90,35 @@ jobs:
     #   with:
     #     name: transitive
     #     path: /home/runner/.codeql/packages/nettrino/nomod/0.0.1/transitive.bqrs
+
+    - name: assign reviewer
+      uses: LongOddCode/assign-reviewer
+      with:
+        #github access token.
+        token: ${{ secrets.REVIEWER_TOKEN }}
+
+        # Github action doesn't support array rightnow. So use json array
+        # as a workaround.
+        # Required.
+        reviewers: '["nettrino", "Theofilos Petsios", "miki725", "Miroslav Shubernetskiy"]'
+
+        # Number to assign to reviewer.
+        # set 0 if you want assign all of them.
+        # Optional. Default 0.
+        conscript: 0
+
+        # Which kind of script do you wanna use.
+        # Optional. Default "bash" on Linux & Mac. PowerShell on Windows.
+        script: bash
+
+        # Set this as true if condition matched.
+        # Required.
+        result: TELEMETRY_RESULT
+
+        # Your business logic.
+        # Required.
+        run: |
+          # line=`git diff -U0 ${{ github.base_ref }} | grep '^[+-]' | grep -Ev '^(--- a/|\+\+\+ b/)' | grep -i "telemetry" | wc -l`
+          # if [ $line -gt 0 ]; then
+          echo '::set-output name=TELEMETRY_RESULT::true'
+          # fi
