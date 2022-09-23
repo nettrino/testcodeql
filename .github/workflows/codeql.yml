@@ -12,13 +12,7 @@
 name: "CodeQL"
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "main" ]
-  schedule:
-    - cron: '30 3 * * 3'
+  pull_request
 
 jobs:
   analyze:
@@ -85,12 +79,6 @@ jobs:
         name: graphql-latest
         path: /home/runner/work/testcodeql/results/python.sarif
     
-    - run: ls -R /home/runner/.codeql/packages/nettrino
-    # - uses: actions/upload-artifact@v3
-    #   with:
-    #     name: transitive
-    #     path: /home/runner/.codeql/packages/nettrino/nomod/0.0.1/transitive.bqrs
-
     - name: assign reviewer
       uses: LongOddCode/assign-reviewer
       with:
