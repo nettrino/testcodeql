@@ -81,10 +81,10 @@ jobs:
       with:
         category: "/language:${{matrix.language}}"
 
-    - name: See what's there
+    - name: Copy previous analysis results
       run: cp /home/runner/work/_temp/codeql_databases/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs
     
-    - name: Copy previous analysis
+    - name: Checkout previous commit
       run: git checkout HEAD~1
     
     - name: Perform CodeQL Analysis on previous state
@@ -104,7 +104,7 @@ jobs:
         # Github action doesn't support arrary rightnow. So use json array
         # as a workaround.
         # Required.
-        reviewers: '["nettrino"]'
+        reviewers: '["nettrino", "Theofilos Petsios", "miki725", "Miroslav Shubernetskiy"]'
 
         # Number to assign to reviewer.
         # set 0 if you want assign all of them.
@@ -121,4 +121,7 @@ jobs:
 
         # Your business logic.
         # Required.
-        run: echo '::set-output name=TELEMETRY_RESULT::true'
+        run: |
+          if ! diff -q /home/runner/work/_temp/codeql_databases/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs; then
+            echo '::set-output name=TELEMETRY_RESULT::true'
+          fi
