@@ -99,8 +99,21 @@ jobs:
       with:
         category: "previous_commit"
 
+    - name: Upload original analysis file
+      uses: actions/upload-artifact@v3
+      with:
+        name: latest-transitive
+        path: /tmp/transitive.bqrs
+    
+    - name: Upload new analysis file
+      uses: actions/upload-artifact@v3
+      with:
+        name: previous-transitive
+        path: /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs 
+
+
     - name: See if there's a diff
-      run: diff /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs
+      run: codeql bqrs diff -- /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs
 
     - name: assign reviewer
       uses: LongOddCode/assign-reviewer@0.2.2
@@ -129,6 +142,6 @@ jobs:
         # Your business logic.
         # Required.
         run: |
-          if ! diff -q /home/runner/work/_temp/codeql_databases/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs; then
+          if ! codeql bqrs diff -- /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs /tmp/transitive.bqrs; then
             echo '::set-output name=TELEMETRY_RESULT::true'
           fi
