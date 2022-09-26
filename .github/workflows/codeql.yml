@@ -59,6 +59,9 @@ jobs:
         
         # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
+    - name: See codeql location
+      run: |
+        echo "$CODEQL_DEFAULT"
 
         
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
@@ -114,8 +117,8 @@ jobs:
 
     - name: See if there's a diff
       run: |
-        /opt/hostedtoolcache/CodeQL/0.0.0-20220825/x64/codeql/codeql bqrs decode /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs  > /tmp/old.csv 
-        /opt/hostedtoolcache/CodeQL/0.0.0-20220825/x64/codeql/codeql bqrs decode /tmp/transitive.bqrs > /tmp/new.csv
+        $CODEQL_DEFAULT bqrs decode /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs  > /tmp/old.csv 
+        $CODEQL_DEFAULT bqrs decode /tmp/transitive.bqrs > /tmp/new.csv
 
     - name: assign reviewer
       uses: LongOddCode/assign-reviewer@0.2.2
