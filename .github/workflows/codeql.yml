@@ -60,10 +60,6 @@ jobs:
         
         # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
-    - name: See codeql location
-      run: |
-        echo "$CODEQL_DEFAULT"
-
     - name: Print CodeQL Version
       run: ${{steps.init.outputs.codeql-path}} version --format=json
         
@@ -120,8 +116,8 @@ jobs:
 
     - name: See if there's a diff
       run: |
-        $CODEQL_DEFAULT bqrs decode /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs  > /tmp/old.csv 
-        $CODEQL_DEFAULT bqrs decode /tmp/transitive.bqrs > /tmp/new.csv
+        ${{steps.init.outputs.codeql-path}} bqrs decode /tmp/newdb_loc/python/results/nettrino/nomod/transitive.bqrs  > /tmp/old.csv 
+        ${{steps.init.outputs.codeql-path}} bqrs decode /tmp/transitive.bqrs > /tmp/new.csv
 
     - name: assign reviewer
       uses: LongOddCode/assign-reviewer@0.2.2
