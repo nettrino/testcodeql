@@ -128,7 +128,7 @@ jobs:
         # Github action doesn't support arrary rightnow. So use json array
         # as a workaround.
         # Required.
-        reviewers: '["miki725"]'
+        reviewers: '["tokyoworks"]'
 
         # Number to assign to reviewer.
         # set 0 if you want assign all of them.
